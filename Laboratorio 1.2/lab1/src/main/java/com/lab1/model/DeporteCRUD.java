@@ -2,6 +2,9 @@ package com.lab1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+import com.lab1.model.Utilidades.Utilidades;
 
 public class DeporteCRUD implements CRUD<Deporte> {
     private List<Deporte> deportes = new ArrayList<>();
@@ -30,12 +33,13 @@ public class DeporteCRUD implements CRUD<Deporte> {
 
         for (Deporte d : deportes) {
             if (d.getDificultad().equals(deporte.getDificultad()) && d.getNombre().toLowerCase().equals(deporte.getNombre().toLowerCase())) {
-                System.out.println("Error: Ya existe un deporte con la misma dificultad.");
+                Utilidades.getInstance().escribirLog(DeporteCRUD.class, " Ya existe un deporte con la misma dificultad.", Level.WARNING);
                 return;
             }
         }
         deportes.add(deporte);
-        System.out.println("Deporte creado exitosamente.");
+        Utilidades.getInstance().escribirLog(DeporteCRUD.class, "Deporte creado exitosamente.", Level.INFO);
+
     }
 
     @Override
@@ -48,6 +52,7 @@ public class DeporteCRUD implements CRUD<Deporte> {
         for (int i = 0; i < deportes.size(); i++) {
             if (deportes.get(i).equals(deporte)) {
                 deportes.set(i, deporte);
+                Utilidades.getInstance().escribirLog(DeporteCRUD.class, "Se actualizo el deporte", Level.INFO );
                 return;
             }
         }
@@ -69,7 +74,8 @@ public class DeporteCRUD implements CRUD<Deporte> {
         // Eliminar sesiones
         for (SesionEntrenamiento sesion : sesionesAEliminar) {
             sesionEntrenamientoCRUD.eliminar(sesion);
-            System.out.println("La sesión " + sesion.getFecha() + " eliminada.");
+            Utilidades.getInstance().escribirLog(DeporteCRUD.class, "La sesión " + sesion.getFecha() + " eliminada.", Level.INFO);
+
         }
     
         // Recopilar entrenadores a eliminar
@@ -83,11 +89,12 @@ public class DeporteCRUD implements CRUD<Deporte> {
         // Eliminar entrenadores
         for (Entrenador entrenador : entrenadoresAEliminar) {
             entrenadorCRUD.eliminar(entrenador);
-            System.out.println("Entrenador " + entrenador.getNombre() + " eliminado junto con el deporte " + deporte.getNombre());
+            System.out.println();
+            Utilidades.getInstance().escribirLog(DeporteCRUD.class, "Entrenador " + entrenador.getNombre() + " eliminado junto con el deporte " + deporte.getNombre(), Level.INFO);
         }
     
         deportes.remove(deporte);
-        System.out.println("Deporte eliminado exitosamente.");
+        Utilidades.getInstance().escribirLog(DeporteCRUD.class, "Deporte eliminado exitosamente." , Level.INFO);
     }
     
 }

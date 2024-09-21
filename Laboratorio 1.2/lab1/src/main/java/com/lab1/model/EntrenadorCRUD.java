@@ -2,6 +2,9 @@ package com.lab1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+import com.lab1.model.Utilidades.Utilidades;
 
 public class EntrenadorCRUD implements CRUD<Entrenador> {
 
@@ -23,12 +26,12 @@ public class EntrenadorCRUD implements CRUD<Entrenador> {
         
         for (Entrenador e : entrenadores) {
             if (e.getNombre().toLowerCase().equals(entrenador.getNombre()) && e.getEspecialidad() == entrenador.getEspecialidad()) {
-                System.out.println("Error: Ya existe un entranador con el mismo nombre.");
+                Utilidades.getInstance().escribirLog(EntrenadorCRUD.class, "Ya existe un entranador con el mismo nombre.", Level.WARNING);
                 return;
             }
         }
         entrenadores.add(entrenador);
-        System.out.println("Entrenador creado exitosamente.");
+        Utilidades.getInstance().escribirLog(EntrenadorCRUD.class, "Entrenador creado exitosamente.", Level.INFO);
     }
 
     @Override
@@ -41,9 +44,11 @@ public class EntrenadorCRUD implements CRUD<Entrenador> {
         for (int i = 0; i < entrenadores.size(); i++) {
             if (entrenadores.get(i).equals(entrenador)) {
                 entrenadores.set(i, entrenador);
+                Utilidades.getInstance().escribirLog(EntrenadorCRUD.class, "Se actualizo el entrenador", Level.INFO );
                 for(SesionEntrenamiento s : sesionEntrenamientoCRUD.listar()){
                     if (s.getEntrenador().equals(entrenadores.get(i))){
                         s.setDeporte(entrenadores.get(i).getEspecialidad());
+                        Utilidades.getInstance().escribirLog(EntrenadorCRUD.class, "Se actualizo el deporte de la sesion " + s.getFecha() + " con el entrenador " + entrenador , Level.INFO );
                     }
                 }
                 
@@ -68,12 +73,12 @@ public class EntrenadorCRUD implements CRUD<Entrenador> {
         // Eliminar sesiones
         for (SesionEntrenamiento sesion : sesionesAEliminar) {
             sesionEntrenamientoCRUD.eliminar(sesion);
-            System.out.println("La sesión " + sesion.getFecha() + " eliminada junto con el entrenador " + entrenador.getNombre());
+            Utilidades.getInstance().escribirLog(EntrenadorCRUD.class, "La sesión " + sesion.getFecha() + " eliminada junto con el entrenador " + entrenador.getNombre(), Level.INFO);
         }
     
         // Eliminar el entrenador
         entrenadores.remove(entrenador);
-        System.out.println("Entrenador eliminado");
+        Utilidades.getInstance().escribirLog(EntrenadorCRUD.class, "El entrenador " + entrenador.getNombre() + " fue eliminado", Level.INFO);
     }
 
 }

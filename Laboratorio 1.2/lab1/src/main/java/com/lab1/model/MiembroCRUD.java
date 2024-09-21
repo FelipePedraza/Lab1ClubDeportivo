@@ -2,6 +2,9 @@ package com.lab1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+import com.lab1.model.Utilidades.Utilidades;
 
 public class MiembroCRUD implements CRUD<Miembro> {
     private List<Miembro> miembros = new ArrayList<>();
@@ -24,12 +27,12 @@ public class MiembroCRUD implements CRUD<Miembro> {
         
         for (Miembro m : miembros) {
             if (m.getNumeroId() == miembro.getNumeroId()) {
-                System.out.println("Error: Ya existe un miembro con la misma identificación.");
+                Utilidades.getInstance().escribirLog(MiembroCRUD.class, "Ya existe un miembro con la misma identificación." , Level.WARNING);
                 return; // Salir sin agregar el miembro
             }
         }
         miembros.add(miembro);
-        System.out.println("Miembro creado exitosamente.");
+        Utilidades.getInstance().escribirLog(MiembroCRUD.class, "Miembro creado exitosamente." , Level.INFO);
     }
 
     @Override
@@ -42,6 +45,7 @@ public class MiembroCRUD implements CRUD<Miembro> {
         for (int i = 0; i < miembros.size(); i++) {
             if (miembros.get(i).equals(miembro)) {
                 miembros.set(i, miembro);
+                Utilidades.getInstance().escribirLog(MiembroCRUD.class, "Se actualizo el miembro", Level.INFO );
                 return;
             }
         }
@@ -54,10 +58,12 @@ public class MiembroCRUD implements CRUD<Miembro> {
             for (int i = 0; i < s.getMiembros().size(); i++) {
                 if(s.getMiembros().get(i).equals(miembro)){
                     s.getMiembros().remove(i);
+                    Utilidades.getInstance().escribirLog(MiembroCRUD.class, "Se elimino el miembro " + miembro + " de la sesion " + s.getFecha() +" con el entrenador"+ s.getEntrenador() , Level.INFO);
 
                 }
             }
         }
         miembros.remove(miembro);
+        Utilidades.getInstance().escribirLog(MiembroCRUD.class, "Miembro eliminado exitosamente." , Level.INFO);
     }
 }

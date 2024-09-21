@@ -3,6 +3,8 @@ package com.lab1.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import com.lab1.model.Utilidades.Utilidades;
 
 public class SesionEntrenamiento implements Inscripcion{
 
@@ -73,10 +75,12 @@ public class SesionEntrenamiento implements Inscripcion{
     @Override
     public void inscribirMiembro(Miembro miembro){
         if(miembro.getEtapa() == Etapa.JUVENIL && deporte.getDificultad() == NivelDificultad.ALTO){
-            throw new IllegalArgumentException("Juveniles no pueden estar en categorias altas");
+            Utilidades.getInstance().escribirLog(SesionEntrenamiento.class, "Ingrese a una categoria menor", Level.WARNING );
+            throw new IllegalArgumentException("Juveniles no pueden estar en categorias altas");  
         }
         else{
             miembros.add(miembro);
+            Utilidades.getInstance().escribirLog(SesionEntrenamiento.class, "Miembro Inscrito", Level.INFO);
         }
         
     }

@@ -1,5 +1,6 @@
 package com.lab1;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
@@ -16,8 +17,10 @@ import com.lab1.model.MiembroCRUD;
 import com.lab1.model.NivelDificultad;
 import com.lab1.model.SesionEntrenamiento;
 import com.lab1.model.SesionEntrenamientoCRUD;
+import com.lab1.model.Utilidades.Utilidades;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,6 +36,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.logging.*;
 
 public class ClubDeportivoController {
 
@@ -59,6 +64,8 @@ public class ClubDeportivoController {
     @FXML private TableColumn<SesionEntrenamiento, String> deporteSesionEntrenamientoColumn;
     @FXML private TableColumn<SesionEntrenamiento, String> estadoSesionEntrenamientoColumn;
     
+    @FXML private ComboBox<String> traducirComboBox;
+
     @FXML private Button addDeporteButton;
     @FXML private Button addEntrenadorButton;
     @FXML private Button addMiembroButton;
@@ -76,18 +83,24 @@ public class ClubDeportivoController {
     private ClubDeportivo clubDeportivo = ClubDeportivo.getInstancia();
     private Administrador administrador = clubDeportivo.getAdmin();
 
-    public void initialize() {
+    public void initialize() throws IOException {
+        
         entrenadorCRUD = new EntrenadorCRUD();
         sesionEntrenamientoCRUD = new SesionEntrenamientoCRUD(entrenadorCRUD);
         deporteCRUD = new DeporteCRUD(entrenadorCRUD, sesionEntrenamientoCRUD);
         entrenadorCRUD.setSesionEntrenamientoCRUD(sesionEntrenamientoCRUD);
         miembroCRUD = new MiembroCRUD(sesionEntrenamientoCRUD);
 
+        Utilidades.getInstance().inicializarLogger();
         configurarTablas();
+        actualizarTexto();
         deseleccionar();
         inicializarDatos();
         cargarDatos();
+        
+        traducirComboBox.setItems(FXCollections.observableArrayList("es", "en"));
 
+        traducirComboBox.setOnAction(e -> cambiarIdioma(traducirComboBox.getValue()));
         addDeporteButton.setOnAction(e -> agregarDeporte());
         addEntrenadorButton.setOnAction(e -> agregarEntrenador());
         addMiembroButton.setOnAction(e -> agregarMiembro());
@@ -101,6 +114,9 @@ public class ClubDeportivoController {
         
     }
 
+    private void actualizarTexto(){
+        addDeporteButton.setText(Utilidades.getInstance().getBundle().getString("agregar_deporte_boton"));
+    }
     private void configurarTablas(){
 
         //Columnas deportes información
@@ -295,6 +311,9 @@ public class ClubDeportivoController {
             alerta.setHeaderText("No se seleccionó ninguna sesión");
             alerta.setContentText("Por favor, seleccione una sesión de la lista para ver la información.");
             alerta.showAndWait();
+            
+            //logger
+            Utilidades.getInstance().escribirLog(ClubDeportivoController.class, "Por favor, seleccione una sesión de la lista para ver la información.", Level.WARNING );
         }
     }
 
@@ -691,7 +710,7 @@ public class ClubDeportivoController {
             // Mostrar un mensaje si no hay ningún elemento seleccionado
             Alert alerta = new Alert(Alert.AlertType.WARNING);
             alerta.setTitle("Advertencia");
-            alerta.setHeaderText("No se ha seleccionado ningún elemento");
+            alerta.setHeaderText(Utilidades.getInstance().getBundle().getString("eliminar_seleccion"));
             alerta.setContentText("Por favor, seleccione un deporte, entrenador, miembro o sesión de las tablas para eliminar.");
             alerta.showAndWait();
         }
@@ -730,5 +749,13 @@ public class ClubDeportivoController {
             }
         });
     }
+    public void cambiarIdioma(String codigoIdioma) {
+        Locale nuevoLocale = new Locale(codigoIdioma);
+        Utilidades.getInstance().setLocale(nuevoLocale);
+        actualizarTexto();
+    }
+
+
+    
     
 }
