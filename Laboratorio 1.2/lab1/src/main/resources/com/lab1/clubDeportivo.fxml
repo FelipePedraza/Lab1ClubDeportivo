@@ -16,10 +16,10 @@
             <VBox alignment="TOP_CENTER" layoutX="34.0" layoutY="19.0" prefHeight="1432.0" prefWidth="593.0" spacing="10">
             <ComboBox fx:id="traducirComboBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="78.0" translateX="250.0"/>
             
-                <Text style="-fx-font-size: 20;" text="Gestión del Club Deportivo" />
+                <Text fx:id="tituloText" style="-fx-font-size: 20;"/>
                 <HBox spacing="10">
                     <Button fx:id="addDeporteButton"/>
-                    <Button fx:id="addEntrenadorButton" text="Agregar Entrenador" />
+                    <Button fx:id="addEntrenadorButton"/>
                     <Button fx:id="addMiembroButton" text="Agregar Miembro" />
                     <Button fx:id="programarSesionButton" text="Programar Sesión" />
                 </HBox>

@@ -35,12 +35,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.logging.*;
 
 public class ClubDeportivoController {
 
+    @FXML private Text tituloText;
+    
     @FXML private TableView<Deporte> deportesTableView;
     @FXML private TableView<Entrenador> entrenadoresTableView;
     @FXML private TableView<Miembro> miembrosTableView;
@@ -93,7 +97,7 @@ public class ClubDeportivoController {
 
         Utilidades.getInstance().inicializarLogger();
         configurarTablas();
-        actualizarTexto();
+        textoInterfaz();
         deseleccionar();
         inicializarDatos();
         cargarDatos();
@@ -114,8 +118,14 @@ public class ClubDeportivoController {
         
     }
 
-    private void actualizarTexto(){
+    private void textoInterfaz(){
+
+        tituloText.setText(Utilidades.getInstance().getBundle().getString("titulo"));
+
         addDeporteButton.setText(Utilidades.getInstance().getBundle().getString("agregar_deporte_boton"));
+        addEntrenadorButton.setText(Utilidades.getInstance().getBundle().getString("agregar_entrenador_boton"));
+        addMiembroButton.setText(Utilidades.getInstance().getBundle().getString("agregar_miembro_boton"));
+        programarSesionButton.setText(Utilidades.getInstance().getBundle().getString("programar_sesión_boton"));
     }
     private void configurarTablas(){
 
@@ -752,7 +762,7 @@ public class ClubDeportivoController {
     public void cambiarIdioma(String codigoIdioma) {
         Locale nuevoLocale = new Locale(codigoIdioma);
         Utilidades.getInstance().setLocale(nuevoLocale);
-        actualizarTexto();
+        textoInterfaz();
     }
 
 
