@@ -14,12 +14,13 @@
     <content>
         <AnchorPane prefHeight="1462.0" prefWidth="664.0">
             <VBox alignment="TOP_CENTER" layoutX="34.0" layoutY="19.0" prefHeight="1432.0" prefWidth="593.0" spacing="10">
-            <ComboBox fx:id="traducirComboBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="78.0" translateX="250.0"/>
+            <ComboBox fx:id="traducirComboBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="78.0" translateX="250.0" />
+            <Text fx:id="traducirText" strokeType="OUTSIDE" strokeWidth="0.0" text="lenguaje" translateX="185.0" translateY="-30.0" />
             
-                <Text fx:id="tituloText" style="-fx-font-size: 20;"/>
+                <Text fx:id="tituloText" style="-fx-font-size: 20;" />
                 <HBox spacing="10">
-                    <Button fx:id="addDeporteButton"/>
-                    <Button fx:id="addEntrenadorButton"/>
+                    <Button fx:id="addDeporteButton" />
+                    <Button fx:id="addEntrenadorButton" />
                     <Button fx:id="addMiembroButton" text="Agregar Miembro" />
                     <Button fx:id="programarSesionButton" text="Programar Sesión" />
                 </HBox>

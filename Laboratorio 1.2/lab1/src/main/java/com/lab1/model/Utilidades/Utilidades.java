@@ -62,12 +62,13 @@ public class Utilidades {
 
         logger.log(nivel, mensaje);
     }
+
+    //traduccion
     public void setLocale(Locale locale) {
         // Cambia el idioma en tiempo de ejecución
         bundle = ResourceBundle.getBundle("MiRecurso", locale);
     }
-
-
+    
 
 
     

@@ -68,6 +68,7 @@ public class ClubDeportivoController {
     @FXML private TableColumn<SesionEntrenamiento, String> deporteSesionEntrenamientoColumn;
     @FXML private TableColumn<SesionEntrenamiento, String> estadoSesionEntrenamientoColumn;
     
+    @FXML private Text traducirText;
     @FXML private ComboBox<String> traducirComboBox;
 
     @FXML private Button addDeporteButton;
@@ -95,7 +96,6 @@ public class ClubDeportivoController {
         entrenadorCRUD.setSesionEntrenamientoCRUD(sesionEntrenamientoCRUD);
         miembroCRUD = new MiembroCRUD(sesionEntrenamientoCRUD);
 
-        Utilidades.getInstance().inicializarLogger();
         configurarTablas();
         textoInterfaz();
         deseleccionar();
@@ -126,6 +126,7 @@ public class ClubDeportivoController {
         addEntrenadorButton.setText(Utilidades.getInstance().getBundle().getString("agregar_entrenador_boton"));
         addMiembroButton.setText(Utilidades.getInstance().getBundle().getString("agregar_miembro_boton"));
         programarSesionButton.setText(Utilidades.getInstance().getBundle().getString("programar_sesión_boton"));
+        traducirText.setText(Utilidades.getInstance().getBundle().getString("idioma"));
     }
     private void configurarTablas(){
 
@@ -482,7 +483,8 @@ public class ClubDeportivoController {
                     alerta.setHeaderText("La Fecha es anterior a la fecha actual.");
                     alerta.setContentText("Ingrese la fecha de nuevo.");
                     alerta.showAndWait();
-                    throw new IllegalArgumentException("La fecha seleccionada no puede ser anterior a la fecha actual.");
+                    Utilidades.getInstance().escribirLog(ClubDeportivoController.class, "La fecha seleccionada no puede ser anterior a la fecha actual.", Level.WARNING );
+                    throw new IllegalArgumentException("La fecha seleccionada no puede ser anterior a la fecha actual."); 
                 }
                 int duracion = Integer.parseInt(duracionField.getText());
                 Estado estado = estadoComboBox.getValue();
@@ -696,6 +698,7 @@ public class ClubDeportivoController {
             alerta.setHeaderText("No se selecciono ningun elemento");
             alerta.setContentText("Por favor, seleccione un deporte o entrenador o miembro o sesion de las tablas para actualizar.");
             alerta.showAndWait();
+            Utilidades.getInstance().escribirLog(ClubDeportivoController.class,"Por favor, seleccione un deporte o entrenador o miembro o sesion de las tablas para actualizar.", Level.INFO);
         }
     }
     public void eliminar(){
@@ -723,6 +726,7 @@ public class ClubDeportivoController {
             alerta.setHeaderText(Utilidades.getInstance().getBundle().getString("eliminar_seleccion"));
             alerta.setContentText("Por favor, seleccione un deporte, entrenador, miembro o sesión de las tablas para eliminar.");
             alerta.showAndWait();
+            Utilidades.getInstance().escribirLog(ClubDeportivoController.class,"Por favor, seleccione un deporte, entrenador, miembro o sesión de las tablas para eliminar.", null);
         }
     }
 

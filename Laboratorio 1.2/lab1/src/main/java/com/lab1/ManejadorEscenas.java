@@ -2,10 +2,13 @@ package com.lab1;
 
 import java.io.IOException;
 
+import com.lab1.model.Utilidades.Utilidades;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.util.logging.*;
 
 public class ManejadorEscenas {
 
@@ -15,12 +18,14 @@ public class ManejadorEscenas {
         if (primaryStage == null) {
             primaryStage = stage;
         } else {
+            Utilidades.getInstance().escribirLog(ManejadorEscenas.class, "Stage ya ha sido inicializado.", Level.WARNING);
             throw new IllegalStateException("Stage ya ha sido inicializado.");
         }
     }
 
     public static void cambiarEscena(String fxml) throws IOException {
         if (primaryStage == null) {
+            Utilidades.getInstance().escribirLog(ManejadorEscenas.class, "Stage no ha sido inicializado.", Level.WARNING);
             throw new IllegalStateException("Stage no ha sido inicializado.");
         }
 
