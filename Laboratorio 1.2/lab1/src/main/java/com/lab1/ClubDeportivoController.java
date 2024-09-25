@@ -795,10 +795,10 @@ public class ClubDeportivoController {
     }
     public void generarReporte() {
         try {
-            Utilidades.getInstance().escribirReporteEnArchivo(deporteCRUD.listar(), "Deportes");
-            Utilidades.getInstance().escribirReporteEnArchivo(miembroCRUD.listar(), "Miembro");
-            Utilidades.getInstance().escribirReporteEnArchivo(entrenadorCRUD.listar(), "Entrenador");
-            Utilidades.getInstance().escribirReporteEnArchivo(sesionEntrenamientoCRUD.listar(), "Sesión");
+            Utilidades.getInstance().escribirReporteEnArchivo(deportesTableView.getItems(), "Deportes");
+            Utilidades.getInstance().escribirReporteEnArchivo(miembrosTableView.getItems(), "Miembro");
+            Utilidades.getInstance().escribirReporteEnArchivo(entrenadoresTableView.getItems(), "Entrenador");
+            Utilidades.getInstance().escribirReporteEnArchivo(sesionesTableView.getItems(), "Sesión");
 
             Utilidades.getInstance().escribirLog(ClubDeportivoController.class, "Datos exportados exitosamente", Level.INFO);
         } catch (IOException e) {
