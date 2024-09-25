@@ -35,6 +35,7 @@ public class Utilidades {
     private FileHandler archivo;
 
     // Singleton: Constructor privado
+    @SuppressWarnings("deprecation")
     private Utilidades(){
         Locale locale = new Locale("es", "CO");
         bundle = ResourceBundle.getBundle("MiRecurso", locale);
@@ -139,11 +140,9 @@ public class Utilidades {
             decodificador = new XMLDecoder(new FileInputStream(nombre));
             objeto = decodificador.readObject();
             escribirLog(Utilidades.class, "Objeto deserializado exitosamente desde archivo XML: " + nombre, Level.INFO);  // Log de éxito
-        } catch (FileNotFoundException e) {
-            escribirLog(Utilidades.class, "Error al encontrar el archivo XML para deserialización: " + nombre + " - " + e.getMessage(), Level.SEVERE);  // Log de error
-        } catch (IOException e) {
+        }catch (IOException e) {
             escribirLog(Utilidades.class, "Error de IO durante la deserialización del archivo XML: " + nombre + " - " + e.getMessage(), Level.SEVERE);  // Log de error
-        } finally {
+        }finally {
             if (decodificador != null) {
                 decodificador.close();
             }

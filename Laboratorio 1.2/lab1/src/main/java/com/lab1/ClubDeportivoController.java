@@ -788,6 +788,7 @@ public class ClubDeportivoController {
             }
         });
     }
+    @SuppressWarnings("deprecation")
     public void cambiarIdioma(String codigoIdioma) {
         Locale nuevoLocale = new Locale(codigoIdioma);
         Utilidades.getInstance().setLocale(nuevoLocale);
