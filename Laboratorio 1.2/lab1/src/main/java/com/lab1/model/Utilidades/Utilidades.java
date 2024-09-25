@@ -1,9 +1,11 @@
 package com.lab1.model.Utilidades;
 
+import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,7 +22,7 @@ import java.util.ResourceBundle;
 public class Utilidades {
     
     private ResourceBundle bundle;
-    private static final String DIRECTORIO_REPORTES = "C://Reportes_Java/";
+    private static final String DIRECTORIO_INFORMACION = "C://Reportes_Java/";
     
     public ResourceBundle getBundle() {
         return bundle;
@@ -78,55 +80,101 @@ public class Utilidades {
     }
 
     // Gestor de archivos
-    public void crearArchivos(List<String> lista1, List<String> lista2) throws IOException {
-        File dir = new File(DIRECTORIO_REPORTES);
-        if (!dir.exists()) {
-            if (dir.mkdirs()) {
-                escribirLog(Utilidades.class,"Directorio creado: " + DIRECTORIO_REPORTES, Level.INFO);
+    // Verificar si existe el directorio y si no, crearlo
+    private void verificarYCrearDirectorio() throws IOException {
+        File directorio = new File(DIRECTORIO_INFORMACION);
+        if (!directorio.exists()) {
+            if (directorio.mkdirs()) {
+                escribirLog(Utilidades.class,"Directorio creado: " + DIRECTORIO_INFORMACION, Level.INFO);
             } else {
-                escribirLog(Utilidades.class, "No se pudo crear el directorio: " + DIRECTORIO_REPORTES, Level.SEVERE);
+                escribirLog(Utilidades.class, "No se pudo crear el directorio: " + DIRECTORIO_INFORMACION, Level.SEVERE);
                 throw new IOException("No se pudo crear el directorio.");
             }
         }
-
-        escribirListaEnArchivo(lista1, DIRECTORIO_REPORTES + "lista1.txt");
-        escribirListaEnArchivo(lista2, DIRECTORIO_REPORTES + "lista2.txt");
     }
 
-    private void escribirListaEnArchivo(List<String> lista, String archivoDatos) throws IOException {
-        try (BufferedWriter escribir = new BufferedWriter(new FileWriter(archivoDatos))) {
+    public <T> void escribirReporteEnArchivo(List<T> lista, String nombreArchivo) throws IOException {
+        verificarYCrearDirectorio();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DIRECTORIO_INFORMACION+nombreArchivo+".txt"))) {
             for (int i = 0; i < lista.size(); i++) {
-                escribir.write(lista.get(i));
-                escribir.newLine();
+                writer.write(lista.get(i).toString());
+                writer.newLine();
+                
+                // Escribe en el archivo cada 10 elementos
                 if ((i + 1) % 10 == 0) {
-                    escribir.flush();
+                    writer.flush();
                 }
+            }
+            // Asegura que el archivo se escriba completamente al final
+            writer.flush();
+            escribirLog(Utilidades.class, "Reporte escrito completamente en el archivo: " + archivo, Level.INFO);
+        }catch (IOException e) {
+            escribirLog(Utilidades.class, "Error al escribir el reporte en el archivo: " + archivo + " - " + e.getMessage(), Level.SEVERE);
+            throw e;
+        }
+    }
+
+    // Serializar y Deserializar objetos Xml
+    public void serializarObjetoXML(Object objeto, String nombre) throws IOException {
+        XMLEncoder codificador = null;
+        try {
+            escribirLog(Utilidades.class, "Iniciando serialización a XML: " + nombre, Level.INFO);  // Log al inicio
+            codificador = new XMLEncoder(new FileOutputStream(nombre));
+            codificador.writeObject(objeto);
+            escribirLog(Utilidades.class, "Objeto serializado exitosamente en archivo XML: " + nombre, Level.INFO);  // Log de éxito
+        } catch (FileNotFoundException e) {
+            escribirLog(Utilidades.class, "Error al crear el archivo XML para serialización: " + nombre + " - " + e.getMessage(), Level.SEVERE);  // Log de error
+        } finally {
+            if (codificador != null) {
+                codificador.close();
             }
         }
     }
+    
+    public Object deserializarObjetoXML(String nombre) throws IOException, ClassNotFoundException {
+        XMLDecoder decodificador = null;
+        Object objeto = null;
+        try {
+            escribirLog(Utilidades.class, "Iniciando deserialización desde archivo XML: " + nombre, Level.INFO);  // Log al inicio
+            decodificador = new XMLDecoder(new FileInputStream(nombre));
+            objeto = decodificador.readObject();
+            escribirLog(Utilidades.class, "Objeto deserializado exitosamente desde archivo XML: " + nombre, Level.INFO);  // Log de éxito
+        } catch (FileNotFoundException e) {
+            escribirLog(Utilidades.class, "Error al encontrar el archivo XML para deserialización: " + nombre + " - " + e.getMessage(), Level.SEVERE);  // Log de error
+        } catch (IOException e) {
+            escribirLog(Utilidades.class, "Error de IO durante la deserialización del archivo XML: " + nombre + " - " + e.getMessage(), Level.SEVERE);  // Log de error
+        } finally {
+            if (decodificador != null) {
+                decodificador.close();
+            }
+        }
+        return objeto;
+    }
+    
 
-    // Serializar y Deserializar objetos
 
-        // Binarios
-    public void serializarObjetoBinario(Object objeto, String ruta) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ruta))) {
+
+    // Binarios
+    public void serializarObjetoBinario(Object objeto, String nombre) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nombre))) {
             oos.writeObject(objeto);
+            escribirLog(Utilidades.class, "Serialización binaria exitosa para el archivo: {0}", Level.INFO);  // Log de info
+        } catch (IOException e) {
+            escribirLog(Utilidades.class, "Error al serializar el objeto en el archivo: {0}", Level.SEVERE); // Log de error
+            throw e;
         }
     }
 
-    public Object deserializarObjetoBinario(String ruta) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ruta))) {
-            return ois.readObject();
+    public Object deserializarObjetoBinario(String nombre) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nombre))) {
+            Object objeto = ois.readObject();
+            escribirLog(Utilidades.class, "Deserialización binaria exitosa para el archivo: {0}", Level.INFO);
+            return objeto;
+        } catch (IOException | ClassNotFoundException e) {
+            escribirLog(Utilidades.class, "Error al deserializar el archivo: {0}", Level.SEVERE);
+            throw e;
         }
     }
-
-    public void serializarObjetoXML(Object objeto, String ruta) throws IOException {
-        XMLEncoder codificador;
-        codificador = new XMLEncoder(new FileOutputStream(nombre));
-        codificador.writeObject(objeto);
-        codificador.close();
-    }
-
     // Carga de archivos serializados.
     public void cargarYMostrarObjeto(String ruta) {
         try {

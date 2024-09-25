@@ -38,6 +38,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.*;
 
@@ -80,6 +82,8 @@ public class ClubDeportivoController {
     
     @FXML private Button actualizarButton;
     @FXML private Button verInfoSesionButton;
+    @FXML private Button reporteButton;
+    @FXML private Button cargarButton;
 
     private DeporteCRUD deporteCRUD;
     private EntrenadorCRUD entrenadorCRUD;
@@ -88,7 +92,7 @@ public class ClubDeportivoController {
     private ClubDeportivo clubDeportivo = ClubDeportivo.getInstancia();
     private Administrador administrador = clubDeportivo.getAdmin();
 
-    public void initialize() throws IOException {
+    public void initialize() throws IOException, ClassNotFoundException {
         
         entrenadorCRUD = new EntrenadorCRUD();
         sesionEntrenamientoCRUD = new SesionEntrenamientoCRUD(entrenadorCRUD);
@@ -100,7 +104,7 @@ public class ClubDeportivoController {
         textoInterfaz();
         deseleccionar();
         inicializarDatos();
-        cargarDatos();
+        
         
         traducirComboBox.setItems(FXCollections.observableArrayList("es", "en"));
 
@@ -109,12 +113,25 @@ public class ClubDeportivoController {
         addEntrenadorButton.setOnAction(e -> agregarEntrenador());
         addMiembroButton.setOnAction(e -> agregarMiembro());
         programarSesionButton.setOnAction(e -> programarSesion());
+        reporteButton.setOnAction(e -> generarReporte());
 
         removeButton.setOnAction(e -> eliminar());
 
-
         actualizarButton.setOnAction(e-> actualizar());
         verInfoSesionButton.setOnAction(e -> mostrarInformacionSesion());
+        cargarButton.setOnAction(e -> {
+            try {
+                cargarDatos();
+            } catch (ClassNotFoundException e1) {
+                Utilidades.getInstance().escribirLog(ClubDeportivoController.class, "clase no encontrada "+ e1 , Level.SEVERE);
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                Utilidades.getInstance().escribirLog(ClubDeportivoController.class, "error de IO: "+ e1 , Level.SEVERE);
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
         
     }
 
@@ -172,7 +189,7 @@ public class ClubDeportivoController {
     }
 
 
-    private void inicializarDatos() {
+    private void inicializarDatos() throws IOException {
 
         // generar deportes
         Deporte futbol = new Deporte("Fútbol", "Deporte en equipo", NivelDificultad.ALTO);
@@ -193,29 +210,38 @@ public class ClubDeportivoController {
         administrador.crearEntrenador(entrenadorCRUD, entrenador3);
 
         // Crear miembros
-        Miembro miembro1 = new Miembro("Juan López", "juan.lopez@example.com", 123, Etapa.JUVENIL);
-        Miembro miembro2 = new Miembro("María Díaz", "maria.diaz@example.com", 124, Etapa.ADULTO);
-        Miembro miembro3 = new Miembro("Luis García", "luis.garcia@example.com", 125, Etapa.ADULTO);
-        Miembro miembro4 = new Miembro("Lucía Fernández", "lucia.fernandez@example.com", 126, Etapa.JUVENIL);
-
-        administrador.crearMiembro(miembroCRUD, miembro1);
-        administrador.crearMiembro(miembroCRUD, miembro2);
-        administrador.crearMiembro(miembroCRUD, miembro3);
-        administrador.crearMiembro(miembroCRUD, miembro4);
-
+        List<Miembro> miembros = Arrays.asList(
+            new Miembro("Juan López", "juan.lopez@example.com", 123, Etapa.JUVENIL),
+            new Miembro("María Díaz", "maria.diaz@example.com", 124, Etapa.ADULTO),
+            new Miembro("Luis García", "luis.garcia@example.com", 125, Etapa.ADULTO),
+            new Miembro("Mario Rodriguez", "Mrio.ro@example.com", 12789, Etapa.JUVENIL),
+            new Miembro("Carlos Rios", "carl.ri@example.com", 126578, Etapa.ADULTO),
+            new Miembro("Jose Espitia", "jose.es@example.com", 1261323, Etapa.ADULTO),
+            new Miembro("David Posso", "Dvid.p@example.com", 12680684, Etapa.ADULTO),
+            new Miembro("Felipe Pedraza", "felipedraza830@example.com", 126086234, Etapa.JUVENIL),
+            new Miembro("Juanes Ordonoñez", "Juanes@example.com", 1267694, Etapa.JUVENIL),
+            new Miembro("Nicolas Hernandez", "Nik.h@example.com", 12623354, Etapa.JUVENIL),
+            new Miembro("Luis Martinez", "luis.Mar@example.com", 12623543, Etapa.ADULTO)
+        );
+        miembros.forEach(miembro -> administrador.crearMiembro(miembroCRUD, miembro));
         // Crear sesiones de entrenamiento
         SesionEntrenamiento sesion1 = new SesionEntrenamiento(LocalDate.now().plusDays(1),30, Estado.PROGRAMADA, futbol,  entrenador1);
         SesionEntrenamiento sesion2 = new SesionEntrenamiento(LocalDate.now().plusDays(2),30, Estado.PROGRAMADA, tenis,  entrenador2);
         SesionEntrenamiento sesion3 = new SesionEntrenamiento(LocalDate.now().plusDays(3),30, Estado.PROGRAMADA, natacion, entrenador3);
         // Inscribir miembros a las sesiones
-        sesion1.inscribirMiembro(miembro2);
-        sesion2.inscribirMiembro(miembro3);
-        sesion3.inscribirMiembro(miembro3);
+        sesion1.inscribirMiembro(miembros.get(1));
+        sesion2.inscribirMiembro(miembros.get(2));
+        sesion3.inscribirMiembro(miembros.get(3));
 
         administrador.programarSesion(sesionEntrenamientoCRUD, sesion1);
         administrador.programarSesion(sesionEntrenamientoCRUD, sesion2);
         administrador.programarSesion(sesionEntrenamientoCRUD, sesion3);
 
+        Utilidades.getInstance().serializarObjetoXML(deporteCRUD.listar(), "deportes.xml");
+        Utilidades.getInstance().serializarObjetoBinario(entrenadorCRUD.listar(), "entrenadores.dat");
+        Utilidades.getInstance().serializarObjetoXML(miembroCRUD.listar(), "miembros.xml");
+        Utilidades.getInstance().serializarObjetoBinario(sesionEntrenamientoCRUD.listar(), "sesiones.dat");
+        
     }
 
     private void mostrarInformacionSesion() {
@@ -305,7 +331,7 @@ public class ClubDeportivoController {
                 try{
                     if (miembroSeleccionado != null) {
                         sesionSeleccionada.inscribirMiembro(miembroSeleccionado);
-                        cargarDatos(); // Recargar los datos después de agregar el nuevo miembro 
+                        actualizarDatos(); // Recargar los datos después de agregar el nuevo miembro 
                     }
                 } catch (IllegalArgumentException e){
                     Alert alerta = new Alert(AlertType.ERROR);
@@ -328,12 +354,11 @@ public class ClubDeportivoController {
         }
     }
 
-    private void cargarDatos() {
+    private void actualizarDatos() {
         deportesTableView.getItems().clear();
         entrenadoresTableView.getItems().clear();
         miembrosTableView.getItems().clear();
         sesionesTableView.getItems().clear();
-
         deportesTableView.getItems().addAll(deporteCRUD.listar());
         entrenadoresTableView.getItems().addAll(entrenadorCRUD.listar());
         miembrosTableView.getItems().addAll(miembroCRUD.listar());
@@ -373,7 +398,7 @@ public class ClubDeportivoController {
         // Mostrar el diálogo y procesar la entrada
         dialog.showAndWait().ifPresent(deporte -> {
             administrador.crearDeporte(deporteCRUD, deporte);
-            cargarDatos(); // Recargar los datos después de agregar el nuevo deporte
+            actualizarDatos(); // Recargar los datos después de agregar el nuevo deporte
         });
         
     }
@@ -410,7 +435,7 @@ public class ClubDeportivoController {
         // Mostrar el diálogo y procesar la entrada
         dialog.showAndWait().ifPresent(entrenador -> {
             administrador.crearEntrenador(entrenadorCRUD, entrenador);
-            cargarDatos(); 
+            actualizarDatos(); 
         });
     }
 
@@ -446,7 +471,7 @@ public class ClubDeportivoController {
         });
         dialog.showAndWait().ifPresent(miembro -> {
             administrador.crearMiembro(miembroCRUD, miembro);
-            cargarDatos(); 
+            actualizarDatos(); 
         });
     }
 
@@ -498,7 +523,7 @@ public class ClubDeportivoController {
         // Mostrar el diálogo y procesar la entrada
         dialog.showAndWait().ifPresent(sesion -> {
             administrador.programarSesion(sesionEntrenamientoCRUD, sesion);
-            cargarDatos(); 
+            actualizarDatos(); 
         });
     }
 
@@ -542,7 +567,7 @@ public class ClubDeportivoController {
             dialog.showAndWait().ifPresent(deporte -> {
                 administrador.actualizarDeporte(deporteCRUD, deporteSeleccionado);
                 deportesTableView.getSelectionModel().clearSelection();
-                cargarDatos(); // Recargar los datos después de actualizar el deporte
+                actualizarDatos(); // Recargar los datos después de actualizar el deporte
             });
         }
         else if(entrenadorSeleccionado != null){
@@ -577,7 +602,7 @@ public class ClubDeportivoController {
             dialog.showAndWait().ifPresent(entrenador -> {
                 administrador.actualizarEntrenador(entrenadorCRUD, entrenadorSeleccionado);
                 entrenadoresTableView.getSelectionModel().clearSelection();
-                cargarDatos(); // Recargar los datos después de actualizar el entrenador
+                actualizarDatos(); // Recargar los datos después de actualizar el entrenador
             });
         }
         else if(miembroSeleccionado != null){
@@ -621,7 +646,7 @@ public class ClubDeportivoController {
             // Mostrar el diálogo y procesar la entrada
             dialog.showAndWait().ifPresent(miembro -> {
                 administrador.actualizarMiembro(miembroCRUD, miembroSeleccionado);
-                cargarDatos(); // Recargar los datos después de actualizar el miembro
+                actualizarDatos(); // Recargar los datos después de actualizar el miembro
             });
         }
         else if(sesionSeleccionada != null){
@@ -688,7 +713,7 @@ public class ClubDeportivoController {
         
             dialog.showAndWait().ifPresent(sesion -> {
                 administrador.actualizarSesion(sesionEntrenamientoCRUD, sesionSeleccionada);
-                cargarDatos(); // Recargar los datos después de actualizar la sesión
+                actualizarDatos(); // Recargar los datos después de actualizar la sesión
             });
         }        
         else {
@@ -709,16 +734,16 @@ public class ClubDeportivoController {
 
         if (deporteSeleccionado != null) {
             administrador.eliminarDeporte(deporteCRUD, deporteSeleccionado);
-            cargarDatos(); // Recargar los datos después de eliminar el deporte
+            actualizarDatos(); // Recargar los datos después de eliminar el deporte
         } else if (entrenadorSeleccionado != null) {
             administrador.eliminarEntrenador(entrenadorCRUD, entrenadorSeleccionado);
-            cargarDatos(); // Recargar los datos después de eliminar el entrenador
+            actualizarDatos(); // Recargar los datos después de eliminar el entrenador
         } else if (miembroSeleccionado != null) {
             administrador.eliminarMiembro(miembroCRUD, miembroSeleccionado);
-            cargarDatos(); // Recargar los datos después de eliminar el miembro
+            actualizarDatos(); // Recargar los datos después de eliminar el miembro
         } else if (sesionSeleccionada != null) {
             administrador.eliminarSesion(sesionEntrenamientoCRUD, sesionSeleccionada);
-            cargarDatos(); // Recargar los datos después de eliminar la sesión
+            actualizarDatos(); // Recargar los datos después de eliminar la sesión
         } else {
             // Mostrar un mensaje si no hay ningún elemento seleccionado
             Alert alerta = new Alert(Alert.AlertType.WARNING);
@@ -767,6 +792,35 @@ public class ClubDeportivoController {
         Locale nuevoLocale = new Locale(codigoIdioma);
         Utilidades.getInstance().setLocale(nuevoLocale);
         textoInterfaz();
+    }
+    public void generarReporte() {
+        try {
+            Utilidades.getInstance().escribirReporteEnArchivo(deporteCRUD.listar(), "Deportes");
+            Utilidades.getInstance().escribirReporteEnArchivo(miembroCRUD.listar(), "Miembro");
+            Utilidades.getInstance().escribirReporteEnArchivo(entrenadorCRUD.listar(), "Entrenador");
+            Utilidades.getInstance().escribirReporteEnArchivo(sesionEntrenamientoCRUD.listar(), "Sesión");
+
+            Utilidades.getInstance().escribirLog(ClubDeportivoController.class, "Datos exportados exitosamente", Level.INFO);
+        } catch (IOException e) {
+            Utilidades.getInstance().escribirLog(ClubDeportivoController.class, "Error al exportar datos: " + e.getMessage(), Level.SEVERE);
+        }
+    }
+    @SuppressWarnings("unchecked")
+    public void cargarDatos() throws ClassNotFoundException, IOException{
+        deportesTableView.getItems().clear();
+        entrenadoresTableView.getItems().clear();
+        miembrosTableView.getItems().clear();
+        sesionesTableView.getItems().clear();
+        
+        List<Deporte> deportesDeserializados = (List<Deporte>) Utilidades.getInstance().deserializarObjetoXML("deportes.xml");
+        List<Entrenador> entrenadoresDeserializados = (List<Entrenador>) Utilidades.getInstance().deserializarObjetoBinario("entrenadores.dat");
+        List<Miembro> miembrosDeserializados = (List<Miembro>) Utilidades.getInstance().deserializarObjetoXML("miembros.xml");
+        List<SesionEntrenamiento> sesionesDeserializados = (List<SesionEntrenamiento>) Utilidades.getInstance().deserializarObjetoBinario("sesiones.dat");
+
+        deportesTableView.getItems().addAll(deportesDeserializados);
+        entrenadoresTableView.getItems().addAll(entrenadoresDeserializados);
+        miembrosTableView.getItems().addAll(miembrosDeserializados);
+        sesionesTableView.getItems().addAll(sesionesDeserializados);
     }
 
 

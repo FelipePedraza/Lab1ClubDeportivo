@@ -1,10 +1,15 @@
 package com.lab1.model;
+import java.io.Serializable;
 
-public class Deporte{
-        
-    private String nombre;
-    private String descripcion;
-    private NivelDificultad dificultad;
+public class Deporte implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
+    public String nombre;
+    public String descripcion;
+    public NivelDificultad dificultad;
+
+    public Deporte() {
+    }
 
     public Deporte(String nombre, String descripcion, NivelDificultad dificultad) {
         this.nombre = nombre;

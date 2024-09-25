@@ -1,22 +1,28 @@
 package com.lab1.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import com.lab1.model.Utilidades.Utilidades;
+import java.io.Serializable;
 
-public class SesionEntrenamiento implements Inscripcion{
+public class SesionEntrenamiento implements Inscripcion, Serializable{
 
-    private LocalDate fecha;
+    private static final long serialVersionUID = 1L;
+    private String fecha;
     private int duracion;
     private Estado estado;
     private Deporte deporte;
     private Entrenador entrenador;
     private List<Miembro> miembros;
 
-    public SesionEntrenamiento(LocalDate fecha, int duracion, Estado estado, Deporte deporte, Entrenador entrenador) {
-        this.fecha = fecha;
+    public SesionEntrenamiento(){
+        this.fecha = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+    public SesionEntrenamiento(LocalDate localDate, int duracion, Estado estado, Deporte deporte, Entrenador entrenador) {
+        this.fecha = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
         this.duracion = duracion;
         this.estado = estado;
         this.deporte = deporte;
@@ -25,11 +31,11 @@ public class SesionEntrenamiento implements Inscripcion{
     }
 
     public LocalDate getFecha() {
-        return fecha;
+        return LocalDate.parse(fecha, DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setFecha(LocalDate localDate) {
+        this.fecha = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     public int getDuracion() {
@@ -88,8 +94,8 @@ public class SesionEntrenamiento implements Inscripcion{
 
     @Override
     public String toString() {
-        return "[Fecha: " + fecha + "Duracion: " + duracion + "Estado: " + estado + "Deporte: "
-                + deporte.getNombre() + ", entrenador=" + entrenador.getNombre() + ", miembros=" + miembros + "]";
+        return "[Fecha: " + fecha + " Duracion: " + duracion + " Estado: " + estado + " [Deporte: "
+                + deporte.getNombre() + ", entrenador=" + entrenador.getNombre() + "], miembros=" + miembros + " ]";
     }
     
 

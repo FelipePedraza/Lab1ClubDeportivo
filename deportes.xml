@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="21.0.3" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="com.lab1.model.Deporte" id="Deporte0">
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>nombre</string>
+     <void method="set">
+      <object idref="Deporte0"/>
+      <string>Fútbol</string>
+     </void>
+    </void>
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>descripcion</string>
+     <void method="set">
+      <object idref="Deporte0"/>
+      <string>Deporte en equipo</string>
+     </void>
+    </void>
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>dificultad</string>
+     <void method="set">
+      <object idref="Deporte0"/>
+      <object class="java.lang.Enum" method="valueOf">
+       <class>com.lab1.model.NivelDificultad</class>
+       <string>ALTO</string>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.lab1.model.Deporte" id="Deporte1">
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>nombre</string>
+     <void method="set">
+      <object idref="Deporte1"/>
+      <string>Tenis</string>
+     </void>
+    </void>
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>descripcion</string>
+     <void method="set">
+      <object idref="Deporte1"/>
+      <string>Deporte de raqueta</string>
+     </void>
+    </void>
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>dificultad</string>
+     <void method="set">
+      <object idref="Deporte1"/>
+      <object class="java.lang.Enum" method="valueOf">
+       <class>com.lab1.model.NivelDificultad</class>
+       <string>MEDIO</string>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.lab1.model.Deporte" id="Deporte2">
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>nombre</string>
+     <void method="set">
+      <object idref="Deporte2"/>
+      <string>Natación</string>
+     </void>
+    </void>
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>descripcion</string>
+     <void method="set">
+      <object idref="Deporte2"/>
+      <string>Deporte acuático</string>
+     </void>
+    </void>
+    <void class="com.lab1.model.Deporte" method="getField">
+     <string>dificultad</string>
+     <void method="set">
+      <object idref="Deporte2"/>
+      <object class="java.lang.Enum" method="valueOf">
+       <class>com.lab1.model.NivelDificultad</class>
+       <string>BAJO</string>
+      </object>
+     </void>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

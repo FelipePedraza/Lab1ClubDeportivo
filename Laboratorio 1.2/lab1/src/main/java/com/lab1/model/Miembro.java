@@ -1,12 +1,18 @@
 package com.lab1.model;
 
-public class Miembro {
+import java.io.Serializable;
 
+public class Miembro implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private String email;
     private int numeroId;
     private Etapa etapa;
 
+    public Miembro(){
+        
+    }
     public Miembro(String nombre, String email, int numeroId, Etapa etapa) {
         this.nombre = nombre;
         this.email = email;
@@ -48,7 +54,7 @@ public class Miembro {
     
     @Override
     public String toString() {
-        return "[Nombre: " + nombre + "Email: " + email + "NumeroId: " + numeroId +"Etapa: " + etapa + "]";
+        return "[Nombre: " + nombre + " Email: " + email + " NumeroId: " + numeroId +" Etapa: " + etapa + " ]";
     }
 
 

@@ -2,12 +2,18 @@ package com.lab1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class Entrenador {
+public class Entrenador implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private Deporte especialidad;
     private List<SesionEntrenamiento> sesionesEntrenamientos;
+
+    public Entrenador(){
+        sesionesEntrenamientos = new ArrayList<>();
+    }
     
     public Entrenador(String nombre, Deporte especialidad, List<SesionEntrenamiento> sesionEntrenamineto) {
         this.nombre = nombre;
@@ -41,7 +47,7 @@ public class Entrenador {
     }
     @Override
     public String toString() {
-        return "[Nombre: " + nombre + " Especialidad: " + especialidad.getNombre() + " " +especialidad.getDificultad() + "]";
+        return "[Nombre: " + nombre + " Especialidad: " + especialidad.getNombre() + " " +especialidad.getDificultad() + " ]";
     }
     public List<SesionEntrenamiento> getSesionesEntrenaminetos() {
         return sesionesEntrenamientos;
