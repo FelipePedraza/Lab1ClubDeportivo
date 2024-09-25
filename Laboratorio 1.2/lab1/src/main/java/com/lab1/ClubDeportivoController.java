@@ -144,6 +144,7 @@ public class ClubDeportivoController {
         addMiembroButton.setText(Utilidades.getInstance().getBundle().getString("agregar_miembro_boton"));
         programarSesionButton.setText(Utilidades.getInstance().getBundle().getString("programar_sesión_boton"));
         traducirText.setText(Utilidades.getInstance().getBundle().getString("idioma"));
+        removeButton.setText(Utilidades.getInstance().getBundle().getString("eliminar_boton"));
     }
     private void configurarTablas(){
 
