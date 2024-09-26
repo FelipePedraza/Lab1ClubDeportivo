@@ -7,6 +7,7 @@ public class Deporte implements Serializable{
     public String nombre;
     public String descripcion;
     public NivelDificultad dificultad;
+    
 
     public Deporte() {
     }

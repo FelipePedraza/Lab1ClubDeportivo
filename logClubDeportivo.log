@@ -1,0 +1,82 @@
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Deporte creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Deporte creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Deporte creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Entrenador creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Entrenador creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Entrenador creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro creado exitosamente.
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro Inscrito
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro Inscrito
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Miembro Inscrito
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Se creo la sesión
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Se creo la sesión
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Se creo la sesión
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Iniciando serialización a XML: deportes.xml
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Objeto serializado exitosamente en archivo XML: deportes.xml
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Serialización binaria exitosa para el archivo: {0}
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Iniciando serialización a XML: miembros.xml
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Objeto serializado exitosamente en archivo XML: miembros.xml
+sept 25, 2024 9:28:03 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Serialización binaria exitosa para el archivo: {0}
+sept 25, 2024 9:29:32 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Iniciando deserialización desde archivo XML: deportes.xml
+sept 25, 2024 9:29:32 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Objeto deserializado exitosamente desde archivo XML: deportes.xml
+sept 25, 2024 9:29:32 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Deserialización binaria exitosa para el archivo: {0}
+sept 25, 2024 9:29:32 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Iniciando deserialización desde archivo XML: miembros.xml
+sept 25, 2024 9:29:32 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Objeto deserializado exitosamente desde archivo XML: miembros.xml
+sept 25, 2024 9:29:32 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Deserialización binaria exitosa para el archivo: {0}
+sept 25, 2024 9:29:56 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Directorio creado: C://Reportes_Java/
+sept 25, 2024 9:29:56 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Reporte escrito completamente en el archivo: java.util.logging.FileHandler@4ae5b16b
+sept 25, 2024 9:29:56 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Reporte escrito completamente en el archivo: java.util.logging.FileHandler@4ae5b16b
+sept 25, 2024 9:29:56 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Reporte escrito completamente en el archivo: java.util.logging.FileHandler@4ae5b16b
+sept 25, 2024 9:29:56 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Reporte escrito completamente en el archivo: java.util.logging.FileHandler@4ae5b16b
+sept 25, 2024 9:29:56 P. M. com.lab1.model.Utilidades.Utilidades escribirLog
+INFORMACIÓN: Datos exportados exitosamente

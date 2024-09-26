@@ -752,7 +752,7 @@ public class ClubDeportivoController {
             alerta.setHeaderText(Utilidades.getInstance().getBundle().getString("eliminar_seleccion"));
             alerta.setContentText("Por favor, seleccione un deporte, entrenador, miembro o sesión de las tablas para eliminar.");
             alerta.showAndWait();
-            Utilidades.getInstance().escribirLog(ClubDeportivoController.class,"Por favor, seleccione un deporte, entrenador, miembro o sesión de las tablas para eliminar.", null);
+            Utilidades.getInstance().escribirLog(ClubDeportivoController.class,"Por favor, seleccione un deporte, entrenador, miembro o sesión de las tablas para eliminar.", Level.WARNING);
         }
     }
 
